@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JobGuard AI</title>
+
+
+<style>
+
+/* ------------------------------
+   GLOBAL
+--------------------------------*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            #312e81,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #581c87,
+            transparent 35%
+        ),
+        #080b18;
+
+    color: white;
+
+    padding: 30px;
+
+}
+
+
+/* ------------------------------
+   NAVBAR
+--------------------------------*/
+
+.navbar {
+
+    max-width: 1150px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 15px 0 35px;
+
+}
+
+
+.logo {
+
+    font-size: 23px;
+
+    font-weight: bold;
+
+}
+
+
+.logo span {
+
+    color: #8b5cf6;
+
+}
+
+
+.status {
+
+    font-size: 13px;
+
+    color: #a7f3d0;
+
+    background: rgba(16,185,129,0.1);
+
+    border: 1px solid rgba(16,185,129,0.3);
+
+    padding: 8px 14px;
+
+    border-radius: 30px;
+
+}
+
+
+/* ------------------------------
+   HERO
+--------------------------------*/
+
+.hero {
+
+    max-width: 1150px;
+
+    margin: auto;
+
+    text-align: center;
+
+    padding: 35px 0;
+
+}
+
+
+.badge {
+
+    display: inline-block;
+
+    padding: 8px 16px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(139,92,246,0.15);
+
+    border:
+        1px solid rgba(139,92,246,0.35);
+
+    color: #c4b5fd;
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.hero h1 {
+
+    font-size: clamp(40px, 7vw, 75px);
+
+    line-height: 1;
+
+    margin-bottom: 20px;
+
+}
+
+
+.gradient-text {
+
+    background:
+        linear-gradient(
+            90deg,
+            #a78bfa,
+            #60a5fa,
+            #c084fc
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+}
+
+
+.hero p {
+
+    max-width: 650px;
+
+    margin: auto;
+
+    color: #a8aec1;
+
+    line-height: 1.7;
+
+}
+
+
+/* ------------------------------
+   MAIN CARD
+--------------------------------*/
+
+.main-card {
+
+    max-width: 850px;
+
+    margin: 40px auto;
+
+    padding: 35px;
+
+    border-radius: 25px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.35);
+
+}
+
+
+.section-title {
+
+    font-size: 20px;
+
+    margin-bottom: 25px;
+
+}
+
+
+label {
+
+    display: block;
+
+    margin: 18px 0 8px;
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+
+}
+
+
+input,
+textarea {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    background:
+        rgba(0,0,0,0.25);
+
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+
+}
+
+
+input:focus,
+textarea:focus {
+
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 0 3px rgba(139,92,246,0.12);
+
+}
+
+
+textarea {
+
+    min-height: 180px;
+
+    resize: vertical;
+
+}
+
+
+/* ------------------------------
+   BUTTON
+--------------------------------*/
+
+.analyze-btn {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7c3aed,
+            #2563eb
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+.analyze-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(99,102,241,0.35);
+
+}
+
+
+/* ------------------------------
+   RESULT
+--------------------------------*/
+
+.result {
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+}
+
+
+.result-title {
+
+    color: #a78bfa;
+
+    font-size: 13px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.result-message {
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+}
+
+
+.error {
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(239,68,68,0.1);
+
+    border:
+        1px solid rgba(239,68,68,0.3);
+
+    color: #fca5a5;
+
+}
+
+
+/* ------------------------------
+   FEATURES
+--------------------------------*/
+
+.features {
+
+    max-width: 1150px;
+
+    margin: 50px auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 18px;
+
+}
+
+
+.feature {
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,0.04);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+}
+
+
+.feature-icon {
+
+    font-size: 28px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.feature h3 {
+
+    margin-bottom: 8px;
+
+}
+
+
+.feature p {
+
+    color: #9299ad;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+}
+
+
+/* ------------------------------
+   FOOTER
+--------------------------------*/
+
+.footer {
+
+    text-align: center;
+
+    color: #6f768b;
+
+    padding: 30px;
+
+    font-size: 13px;
+
+}
+
+
+/* ------------------------------
+   MOBILE
+--------------------------------*/
+
+@media(max-width:600px) {
+
+    body {
+
+        padding: 15px;
+
+    }
+
+
+    .main-card {
+
+        padding: 22px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+    <div class="logo">
+
+        🛡️ Job<span>Guard</span> AI
+
+    </div>
+
+
+    <div class="status">
+
+        ● AI SYSTEM ONLINE
+
+    </div>
+
+</div>
+
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="badge">
+
+        MACHINE LEARNING • NLP • AI
+
+    </div>
+
+
+    <h1>
+
+        Detect Fake Jobs
+
+        <br>
+
+        <span class="gradient-text">
+
+            Before They Detect You.
+
+        </span>
+
+    </h1>
+
+
+    <p>
+
+        JobGuard AI analyzes job advertisements
+
+        using Natural Language Processing and
+
+        Machine Learning to identify potentially
+
+        fraudulent job postings.
+
+    </p>
+
+</section>
+
+
+
+<!-- MAIN -->
+
+<div class="main-card">
+
+    <div class="section-title">
+
+        🔍 Analyze Job Advertisement
+
+    </div>
+
+
+    <form
+        action="/predict"
+        method="POST"
+    >
+
+
+        <label>
+
+            Job Title
+
+        </label>
+
+
+        <input
+            type="text"
+            name="title"
+            placeholder="e.g. Software Engineer"
+            required
+        >
+
+
+
+        <label>
+
+            Company Name
+
+        </label>
+
+
+        <input
+            type="text"
+            name="company"
+            placeholder="e.g. ABC Technologies"
+        >
+
+
+
+        <label>
+
+            Job Description
+
+        </label>
+
+
+        <textarea
+            name="description"
+            placeholder="Paste the complete job description here..."
+            required
+        ></textarea>
+
+
+
+        <button
+            type="submit"
+            class="analyze-btn"
+        >
+
+            🧠 Analyze with JobGuard AI
+
+        </button>
+
+
+    </form>
+
+
+
+    {% if error %}
+
+        <div class="error">
+
+            ⚠️ {{ error }}
+
+        </div>
+
+    {% endif %}
+
+
+
+    {% if analyzed %}
+
+<div class="result">
+
+    <div class="result-title">
+        AI ANALYSIS RESULT
+    </div>
+
+    {% if prediction == 1 %}
+
+        <div class="result-message" style="color:#f87171;">
+            🚨 FAKE JOB DETECTED
+        </div>
+
+        <p style="margin-top:15px; color:#fca5a5;">
+            This job posting appears to be potentially fraudulent.
+            Please verify the company and job details before applying.
+        </p>
+
+    {% else %}
+
+        <div class="result-message" style="color:#34d399;">
+            ✅ REAL JOB DETECTED
+        </div>
+
+        <p style="margin-top:15px; color:#a7f3d0;">
+            This job posting appears to be legitimate based on the
+            AI model analysis.
+        </p>
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+</div>
+
+
+
+<!-- FEATURES -->
+
+<div class="features">
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+
+            🧠
+
+        </div>
+
+
+        <h3>
+
+            NLP Analysis
+
+        </h3>
+
+
+        <p>
+
+            Processes job advertisement
+
+            text using Natural Language
+
+            Processing techniques.
+
+        </p>
+
+    </div>
+
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+
+            📊
+
+        </div>
+
+
+        <h3>
+
+            ML Classification
+
+        </h3>
+
+
+        <p>
+
+            Uses a trained Machine Learning
+
+            model to classify job postings.
+
+        </p>
+
+    </div>
+
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+
+            🛡️
+
+        </div>
+
+
+        <h3>
+
+            Fraud Protection
+
+        </h3>
+
+
+        <p>
+
+            Helps job seekers identify
+
+            potentially suspicious advertisements.
+
+        </p>
+
+    </div>
+
+
+
+</div>
+
+
+
+<div class="footer">
+
+    AI-Based Fake Job Detection System
+
+    <br><br>
+
+    Developed by <b>MAHALAKSHMI V</b> • CSE
+
+</div>
+
+
+</body>
+
+</html>
